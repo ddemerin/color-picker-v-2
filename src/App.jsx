@@ -7,6 +7,8 @@ const App = () => {
   const [sat, setSat] = useState(Math.floor(Math.random() * 100))
   const [light, setLight] = useState(Math.floor(Math.random() * 100))
   const [alpha, setAlpha] = useState(100)
+  const [bgcolor, setBgcolor] = useState(0)
+  const [hsla, setHsla] = useState(0)
 
   const updateHue = (e) => {
     const h = e.target.value
@@ -41,6 +43,20 @@ const App = () => {
     setLight(Math.floor(Math.random() * 100))
   }
 
+  useEffect(() => {
+    const newHsla = `hsla(${hue},
+      ${sat}%,
+      ${light}%)`
+    setHsla(newHsla)
+  }, [hue, sat, light])
+
+  useEffect(() => {
+    const newBG = `${hue},
+      ${sat}%,
+      ${light}%, ${alpha}%`
+    setBgcolor(newBG)
+  }, [hue, sat, light, alpha])
+
   return (
     <body>
       <main>
@@ -54,9 +70,7 @@ const App = () => {
               <div
                 className="color-box"
                 style={{
-                  backgroundColor: `hsla(${hue},
-                    ${sat}%,
-                    ${light}%, ${alpha}%)`,
+                  backgroundColor: `hsla(${bgcolor})`,
                 }}
               ></div>
             </div>
@@ -70,9 +84,7 @@ const App = () => {
             </button>
           </aside>
           <div className="hsla-code-container">
-            <p className="hsla-code">
-              hsla({hue}, {sat}%, {light}%)
-            </p>
+            <p className="hsla-code">{hsla}</p>
           </div>
         </section>
         <section className="hsla-container">
@@ -134,4 +146,4 @@ const App = () => {
   )
 }
 
-export default A
+export default App
